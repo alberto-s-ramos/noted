@@ -1,0 +1,12 @@
+.mainPage {
+    padding: var(--page-padding);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 800px;
+    overflow-y: scroll;
+    margin: 0 auto;
+    padding: 2rem;
+}

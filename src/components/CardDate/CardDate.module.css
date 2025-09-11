@@ -1,0 +1,21 @@
+.cardDate {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+}
+
+.month {
+    margin-bottom: -0.5rem;
+    opacity: 0.25;
+}
+
+.day,
+.month,
+.weekday {
+    font-weight: 500;
+}
+
+.weekday {
+    margin-top: -0.25rem;
+    opacity: 0.25;
+}

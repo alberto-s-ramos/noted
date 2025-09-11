@@ -1,0 +1,9 @@
+:root {
+    --color-bg: #0a0a0a;
+    --color-text: #ffffff;
+    --color-primary: #818cf8;
+    --color-secondary: #a5b4fc;
+    --color-card-bg: #151515;
+
+    --page-padding: 16px;
+}
