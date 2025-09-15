@@ -1,6 +1,7 @@
 .dailyCard {
     position: relative;
     padding-top: 1rem;
+    margin: 2rem 0;
     display: flex;
     width: 100%;
     gap: 3rem;
@@ -18,6 +19,7 @@
 
 
 .dailyEntries {
+    justify-content: space-between;
     align-items: flex-start;
     flex-direction: column;
     text-align: start;
@@ -32,10 +34,15 @@
     padding: 0.5rem 1rem;
     border-radius: 8px;
     text-align: left;
+    margin-top: 20px;
     cursor: pointer;
     border: unset;
 }
 
 .addEntryButton:hover {
     background-color: var(--color-card-bg-highlight);
+}
+
+.noEntries {
+    opacity: 0.25;
 }

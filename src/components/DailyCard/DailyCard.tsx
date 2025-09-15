@@ -41,6 +41,7 @@ export const DailyCard = ({ dailyLog = {} }: DailyCardProps) => {
             <CardDate date={date} />
 
             <div className={styles.dailyEntries}>
+                {entries.length === 0 && <span className={styles.noEntries}>No entries logged today</span>}
                 {entries.map((entry) => (
                     <Entry
                         key={entry.id}

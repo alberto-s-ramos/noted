@@ -1,4 +1,46 @@
 .feed {
+    box-sizing: border-box;
+    flex-direction: column;
     display: flex;
-    gap: 4rem;
+    height: 100vh;
+    padding: 1rem;
+}
+
+.activityGridWrapper {
+    justify-content: center;
+    position: relative;
+    display: flex;
+}
+
+.activityGridWrapper::after {
+    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
+    pointer-events: none;
+    position: absolute;
+    bottom: -5rem;
+    height: 4rem;
+    content: '';
+    width: 100%;
+    z-index: 10;
+    left: 0;
+}
+
+.dailyLogs {
+    -ms-overflow-style: none;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    overflow-x: hidden;
+    position: relative;
+    margin-top: 1rem;
+    overflow-y: auto;
+    width: 100%;
+    flex: 1;
+}
+
+.dailyLogs::-webkit-scrollbar {
+    display: none;
+}
+
+.dailyLogs>* {
+    box-sizing: border-box;
+    width: 100%;
 }

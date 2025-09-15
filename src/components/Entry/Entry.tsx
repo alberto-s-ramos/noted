@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import classNames from "classnames";
 import styles from "./Entry.module.css";
 import { useTextAreaAutoResize } from "../../hooks/useTextAreaAutoResize";

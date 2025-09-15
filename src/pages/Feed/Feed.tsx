@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { ActivityGrid } from '../../components/ActivityGrid/ActivityGrid';
 import { DailyCard } from '../../components/DailyCard/DailyCard';
 import type { DailyEntry, DailyLog } from '../../data/types';
@@ -58,17 +59,27 @@ const mockActivityData = Array.from({ length: 364 }, () => {
     return Math.floor(Math.random() * 7) + 1;
 });
 
-
 export const Feed = () => {
     const logs = mockDailyLogs(70);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            container.scrollTop = 0;
+        }
+    }, []);
 
     return (
         <MainPage className={styles.feed}>
-            <ActivityGrid data={mockActivityData} />
-            {logs.map((log, idx) => (
-                <DailyCard key={idx} dailyLog={log} />
-            ))}
-
+            <div className={styles.activityGridWrapper}>
+                <ActivityGrid data={mockActivityData} />
+            </div>
+            <div className={styles.dailyLogs} ref={scrollContainerRef}>
+                {logs.map((log, idx) => (
+                    <DailyCard key={idx} dailyLog={log} />
+                ))}
+            </div>
         </MainPage>
-    )
-}
+    );
+};
