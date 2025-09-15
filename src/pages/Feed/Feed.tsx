@@ -37,7 +37,7 @@ const mockDailyLogs = (days: number): DailyLog[] => {
         const date = new Date(today);
         date.setDate(today.getDate() - i);
 
-        const numEntries = Math.floor(Math.random() * 6) + 2;
+        const numEntries = Math.floor(Math.random() * 6);
 
         const entries: DailyEntry[] = [];
         for (let j = 0; j < numEntries; j++) {

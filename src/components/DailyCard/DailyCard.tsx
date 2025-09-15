@@ -1,3 +1,4 @@
+import { format, isToday } from "date-fns";
 import { useState } from "react";
 import type { DailyLog } from "../../data/types";
 import { CardDate } from "../CardDate/CardDate";
@@ -36,12 +37,16 @@ export const DailyCard = ({ dailyLog = {} }: DailyCardProps) => {
         setEntries((prev) => [...prev, newEntry]);
     };
 
+    const noEntriesMessage = isToday(date)
+        ? "No entries logged today"
+        : `No entries logged on ${format(date, "MMM d")}`;
+
     return (
         <div className={styles.dailyCard}>
             <CardDate date={date} />
 
             <div className={styles.dailyEntries}>
-                {entries.length === 0 && <span className={styles.noEntries}>No entries logged today</span>}
+                {entries.length === 0 && <span className={styles.noEntries}>{noEntriesMessage}</span>}
                 {entries.map((entry) => (
                     <Entry
                         key={entry.id}

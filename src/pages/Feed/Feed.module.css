@@ -9,6 +9,7 @@
 .activityGridWrapper {
     justify-content: center;
     position: relative;
+    margin-top: 1rem;
     display: flex;
 }
 
