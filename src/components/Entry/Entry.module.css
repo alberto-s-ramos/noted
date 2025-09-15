@@ -1,0 +1,44 @@
+.entry {
+    transition: background-color 0.2s ease;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+}
+
+.hovered {
+    background-color: var(--color-card-bg);
+}
+
+.text,
+.textarea,
+.sizer {
+    word-break: break-word;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    line-height: inherit;
+    display: block;
+    font: inherit;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.textarea {
+    background: transparent;
+    line-height: inherit;
+    overflow: hidden;
+    outline: none;
+    min-height: 0;
+    border: none;
+    resize: none;
+}
+
+.sizer {
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+}

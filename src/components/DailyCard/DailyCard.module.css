@@ -1,27 +1,41 @@
 .dailyCard {
     position: relative;
-    width: 100%;
-    display: flex;
-    gap: 3rem;
     padding-top: 1rem;
-    /* or your page background */
+    display: flex;
+    width: 100%;
+    gap: 3rem;
 }
 
 .dailyCard::before {
-    content: "";
+    background: linear-gradient(to right, var(--color-card-bg), transparent);
     position: absolute;
-    top: 0;
-    left: 0;
+    content: "";
     width: 100%;
     height: 3px;
-    background: linear-gradient(to right, var(--color-card-bg), transparent);
+    left: 0;
+    top: 0;
 }
 
 
 .dailyEntries {
-    display: flex;
-    gap: 0.5rem;
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
     text-align: start;
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.addEntryButton {
+    background-color: var(--color-card-bg);
+    transition: background-color 0.2s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    border: unset;
+}
+
+.addEntryButton:hover {
+    background-color: var(--color-card-bg-highlight);
 }
