@@ -5,15 +5,16 @@ type CardDateProps = {
 }
 
 export const CardDate = ({ date }: CardDateProps) => {
-    const options: Intl.DateTimeFormatOptions = {
+    const formatter = new Intl.DateTimeFormat(undefined, {
         month: "short",
         day: "numeric",
-        weekday: "short"
-    };
+        weekday: "short",
+    });
 
-    const formatted = date.toLocaleDateString(undefined, options);
-    const parts = formatted.replace(',', '').split(' ');
-    const [weekday, month, day] = parts;
+    const parts = formatter.formatToParts(date);
+    const weekday = parts.find(p => p.type === "weekday")?.value ?? "";
+    const month = parts.find(p => p.type === "month")?.value ?? "";
+    const day = parts.find(p => p.type === "day")?.value ?? "";
 
     return (
         <div className={styles.cardDate}>
