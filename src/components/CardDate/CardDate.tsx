@@ -5,7 +5,7 @@ type CardDateProps = {
 }
 
 export const CardDate = ({ date }: CardDateProps) => {
-    const formatter = new Intl.DateTimeFormat(undefined, {
+    const formatter = new Intl.DateTimeFormat("en-US", {
         month: "short",
         day: "numeric",
         weekday: "short",
