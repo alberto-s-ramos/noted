@@ -1,0 +1,35 @@
+# Configuration file for Noted Backend API
+# This file contains default configuration values
+# Environment variables will override these values
+
+server:
+  port: "8080"
+  environment: "development"
+
+database:
+  host: "localhost"
+  port: "5432"
+  user: "postgres"
+  password: ""
+  dbname: "noted"
+  sslmode: "disable"
+
+cors:
+  allowed_origins:
+    - "http://localhost:5173"  # Vite dev server
+    - "http://localhost:3000"  # Alternative frontend port
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers:
+    - "Origin"
+    - "Content-Type"
+    - "Accept"
+    - "Authorization"
+
+logging:
+  level: "info"
+  format: "json"
