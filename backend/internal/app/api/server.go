@@ -8,17 +8,20 @@ import (
 
 	"github.com/albertoramos/noted/backend/internal/app/api/handlers"
 	"github.com/albertoramos/noted/backend/internal/app/api/middleware"
+	"github.com/albertoramos/noted/backend/internal/app/repository"
 	"github.com/albertoramos/noted/backend/internal/pkg/config"
+	"github.com/albertoramos/noted/backend/internal/pkg/database"
 )
 
 // Server represents the API server
 type Server struct {
 	Router *gin.Engine
 	config *config.Config
+	db     *database.DB
 }
 
 // NewServer creates a new API server
-func NewServer(cfg *config.Config) *Server {
+func NewServer(cfg *config.Config, db *database.DB) *Server {
 	// Set Gin mode based on environment
 	if cfg.Environment == "production" {
 		gin.SetMode(gin.ReleaseMode)
@@ -29,6 +32,7 @@ func NewServer(cfg *config.Config) *Server {
 	server := &Server{
 		Router: router,
 		config: cfg,
+		db:     db,
 	}
 
 	server.setupMiddleware()
@@ -66,20 +70,26 @@ func (s *Server) setupRoutes() {
 		})
 	})
 
+	// Initialize repositories
+	notesRepo := repository.NewPostgresNotesRepository(s.db.DB)
+	
+	// Initialize handlers
+	notesHandler := handlers.NewNotesHandler(notesRepo)
+
 	// API v1 routes
 	v1 := s.Router.Group("/api/v1")
 	{
 		// Ping endpoint for testing
 		v1.GET("/ping", handlers.Ping)
-
-		// Notes endpoints (placeholder for future implementation)
+		
+		// Notes endpoints
 		notes := v1.Group("/notes")
 		{
-			notes.GET("", handlers.GetNotes)
-			notes.POST("", handlers.CreateNote)
-			notes.GET("/:id", handlers.GetNote)
-			notes.PUT("/:id", handlers.UpdateNote)
-			notes.DELETE("/:id", handlers.DeleteNote)
+			notes.GET("", notesHandler.GetNotes)
+			notes.POST("", notesHandler.CreateNote)
+			notes.GET("/:id", notesHandler.GetNote)
+			notes.PUT("/:id", notesHandler.UpdateNote)
+			notes.DELETE("/:id", notesHandler.DeleteNote)
 		}
 	}
 }

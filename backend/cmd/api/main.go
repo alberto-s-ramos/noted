@@ -11,14 +11,22 @@ import (
 
 	"github.com/albertoramos/noted/backend/internal/app/api"
 	"github.com/albertoramos/noted/backend/internal/pkg/config"
+	"github.com/albertoramos/noted/backend/internal/pkg/database"
 )
 
 func main() {
 	// Load configuration
 	cfg := config.Load()
 
+	// Initialize database connection
+	db, err := database.NewPostgresConnection(cfg)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer db.Close()
+
 	// Initialize the API server
-	server := api.NewServer(cfg)
+	server := api.NewServer(cfg, db)
 
 	// Setup HTTP server
 	srv := &http.Server{
