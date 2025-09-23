@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/albertoramos/noted-backend/internal/app/api"
-	"github.com/albertoramos/noted-backend/internal/pkg/config"
+	"github.com/albertoramos/noted/backend/internal/app/api"
+	"github.com/albertoramos/noted/backend/internal/pkg/config"
 )
 
 func main() {
