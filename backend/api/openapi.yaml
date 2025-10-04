@@ -179,9 +179,6 @@ components:
         id:
           type: string
           example: "123e4567-e89b-12d3-a456-426614174000"
-        title:
-          type: string
-          example: "My Note Title"
         content:
           type: string
           example: "This is the content of my note."
@@ -197,12 +194,8 @@ components:
     CreateNoteRequest:
       type: object
       required:
-        - title
         - content
       properties:
-        title:
-          type: string
-          example: "My Note Title"
         content:
           type: string
           example: "This is the content of my note."
@@ -210,9 +203,6 @@ components:
     UpdateNoteRequest:
       type: object
       properties:
-        title:
-          type: string
-          example: "Updated Note Title"
         content:
           type: string
           example: "This is the updated content of my note."

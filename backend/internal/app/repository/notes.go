@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/albertoramos/noted/backend/pkg/models"
+	"github.com/google/uuid"
 )
 
 // NotesRepository defines the interface for notes repository
@@ -34,7 +34,7 @@ func NewPostgresNotesRepository(db *sql.DB) NotesRepository {
 // GetAll retrieves all notes from the database
 func (r *PostgresNotesRepository) GetAll(ctx context.Context) ([]models.Note, error) {
 	query := `
-		SELECT id, title, content, created_at, updated_at 
+		SELECT id, content, created_at, updated_at 
 		FROM notes 
 		ORDER BY created_at DESC
 	`
@@ -50,7 +50,6 @@ func (r *PostgresNotesRepository) GetAll(ctx context.Context) ([]models.Note, er
 		var note models.Note
 		err := rows.Scan(
 			&note.ID,
-			&note.Title,
 			&note.Content,
 			&note.CreatedAt,
 			&note.UpdatedAt,
@@ -71,7 +70,7 @@ func (r *PostgresNotesRepository) GetAll(ctx context.Context) ([]models.Note, er
 // GetByID retrieves a note by its ID
 func (r *PostgresNotesRepository) GetByID(ctx context.Context, id string) (*models.Note, error) {
 	query := `
-		SELECT id, title, content, created_at, updated_at 
+		SELECT id, content, created_at, updated_at 
 		FROM notes 
 		WHERE id = $1
 	`
@@ -79,7 +78,6 @@ func (r *PostgresNotesRepository) GetByID(ctx context.Context, id string) (*mode
 	var note models.Note
 	err := r.db.QueryRowContext(ctx, query, id).Scan(
 		&note.ID,
-		&note.Title,
 		&note.Content,
 		&note.CreatedAt,
 		&note.UpdatedAt,
@@ -98,9 +96,9 @@ func (r *PostgresNotesRepository) GetByID(ctx context.Context, id string) (*mode
 // Create creates a new note in the database
 func (r *PostgresNotesRepository) Create(ctx context.Context, req *models.CreateNoteRequest) (*models.Note, error) {
 	query := `
-		INSERT INTO notes (id, title, content, created_at, updated_at)
+		INSERT INTO notes (id, content, created_at, updated_at)
 		VALUES ($1, $2, $3, $4, $5)
-		RETURNING id, title, content, created_at, updated_at
+		RETURNING id, content, created_at, updated_at
 	`
 
 	id := uuid.New().String()
@@ -111,13 +109,11 @@ func (r *PostgresNotesRepository) Create(ctx context.Context, req *models.Create
 		ctx,
 		query,
 		id,
-		req.Title,
 		req.Content,
 		now,
 		now,
 	).Scan(
 		&note.ID,
-		&note.Title,
 		&note.Content,
 		&note.CreatedAt,
 		&note.UpdatedAt,
@@ -134,11 +130,10 @@ func (r *PostgresNotesRepository) Create(ctx context.Context, req *models.Create
 func (r *PostgresNotesRepository) Update(ctx context.Context, id string, req *models.UpdateNoteRequest) (*models.Note, error) {
 	query := `
 		UPDATE notes 
-		SET title = COALESCE(NULLIF($2, ''), title),
-		    content = COALESCE(NULLIF($3, ''), content),
+		SET content = COALESCE(NULLIF($3, ''), content),
 		    updated_at = $4
 		WHERE id = $1
-		RETURNING id, title, content, created_at, updated_at
+		RETURNING id, content, created_at, updated_at
 	`
 
 	now := time.Now()
@@ -148,12 +143,10 @@ func (r *PostgresNotesRepository) Update(ctx context.Context, id string, req *mo
 		ctx,
 		query,
 		id,
-		req.Title,
 		req.Content,
 		now,
 	).Scan(
 		&note.ID,
-		&note.Title,
 		&note.Content,
 		&note.CreatedAt,
 		&note.UpdatedAt,

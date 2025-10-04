@@ -1,13 +1,13 @@
 package handlers
 
 import (
-	"net/http"
 	"context"
+	"net/http"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/albertoramos/noted/backend/internal/app/repository"
 	"github.com/albertoramos/noted/backend/pkg/models"
+	"github.com/gin-gonic/gin"
 )
 
 // NotesHandler handles note-related HTTP requests
@@ -30,16 +30,15 @@ func (h *NotesHandler) GetNotes(c *gin.Context) {
 	notes, err := h.notesRepo.GetAll(ctx)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to retrieve notes",
+			"error":   "Failed to retrieve notes",
 			"details": err.Error(),
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Notes retrieved successfully",
-		"data":    notes,
-		"count":   len(notes),
+		"data":  notes,
+		"count": len(notes),
 	})
 }
 
@@ -51,7 +50,7 @@ func (h *NotesHandler) CreateNote(c *gin.Context) {
 	var req models.CreateNoteRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid request body",
+			"error":   "Invalid request body",
 			"details": err.Error(),
 		})
 		return
@@ -60,7 +59,7 @@ func (h *NotesHandler) CreateNote(c *gin.Context) {
 	note, err := h.notesRepo.Create(ctx, &req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to create note",
+			"error":   "Failed to create note",
 			"details": err.Error(),
 		})
 		return
@@ -88,7 +87,7 @@ func (h *NotesHandler) GetNote(c *gin.Context) {
 	note, err := h.notesRepo.GetByID(ctx, id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Note not found",
+			"error":   "Note not found",
 			"details": err.Error(),
 		})
 		return
@@ -116,7 +115,7 @@ func (h *NotesHandler) UpdateNote(c *gin.Context) {
 	var req models.UpdateNoteRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid request body",
+			"error":   "Invalid request body",
 			"details": err.Error(),
 		})
 		return
@@ -125,7 +124,7 @@ func (h *NotesHandler) UpdateNote(c *gin.Context) {
 	note, err := h.notesRepo.Update(ctx, id, &req)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Failed to update note",
+			"error":   "Failed to update note",
 			"details": err.Error(),
 		})
 		return
@@ -153,7 +152,7 @@ func (h *NotesHandler) DeleteNote(c *gin.Context) {
 	err := h.notesRepo.Delete(ctx, id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error": "Failed to delete note",
+			"error":   "Failed to delete note",
 			"details": err.Error(),
 		})
 		return

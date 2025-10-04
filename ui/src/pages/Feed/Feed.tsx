@@ -5,6 +5,7 @@ import { DailyCard } from "../../components/DailyCard/DailyCard";
 import type { DailyLog } from "../../data/types";
 import { MainPage } from "../../layout/MainPage/MainPage";
 import styles from "./Feed.module.css";
+import { useGetNotes } from "../../api/generated";
 
 const activityTypes = [
     "PR Open",
@@ -59,6 +60,10 @@ const mockDailyLogs = (days: number): DailyLog[] => {
 export const Feed = () => {
     const [logs, setLogs] = useState<DailyLog[]>(() => mockDailyLogs(70));
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    const { data: notes } = useGetNotes();
+
+    console.log(notes);
 
     const daysInYear = 364;
     const today = new Date();
